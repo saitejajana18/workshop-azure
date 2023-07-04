@@ -20,7 +20,7 @@ node {
   
     stage('deploy') {
       def resourceGroup = 'rs615'
-      def webAppName = 'appname18'
+      def webAppName = 'webappname18'
       // login Azure
       withCredentials([usernamePassword(credentialsId: 'azure-jenkins', passwordVariable: 'LHd8Q~k7ILwbTCi5iIf9bb1txMvE.lB9E9xWtcv-', usernameVariable: '6b70ee77-232d-4e04-b72e-8e6e7cb919ce')]) {
        sh '''
@@ -29,7 +29,7 @@ node {
         '''
       }
       // get publish settings
-      def pubProfilesJson = sh script: "az webapp deployment list-publishing-profiles -g rs615 -n appname18", returnStdout: true
+      def pubProfilesJson = sh script: "az webapp deployment list-publishing-profiles -g rs615 -n webappname18", returnStdout: true
       def ftpProfile = getFtpPublishProfile pubProfilesJson
       // upload package
       sh "sudo curl -T target/calculator-1.0.war $ftpProfile.url/webapps/ROOT.war -u '$ftpProfile.username:$ftpProfile.password'"
